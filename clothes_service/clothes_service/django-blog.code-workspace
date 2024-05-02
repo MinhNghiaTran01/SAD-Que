@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../../../django-blog"
+		},
+		{
+			"path": "../../../Weather"
+		},
+		{
+			"path": "../../../Chat-app"
+		},
+		{
+			"path": "../../../RestAPI"
+		},
+		{
+			"path": "../../../ecomsystem"
+		},
+		{
+			"path": "../../../../../../../../Android/GroupChat"
+		},
+		{
+			"path": "../../../../../../../../Android/ChatApp"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../CreateRestApi"
+		}
+	],
+	"settings": {}
+}
