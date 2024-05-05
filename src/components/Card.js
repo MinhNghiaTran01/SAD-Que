@@ -1,18 +1,24 @@
 import { BsFillBagFill } from "react-icons/bs";
 import { AiFillStar } from "react-icons/ai";
-const Card = ({ image_url, title, price }) => {
+
+function formatNumber(num) {
+  return num.toLocaleString('de-DE'); // For US locale, this uses comma as thousand separator
+}
+const Card = ({ image, name, price,discount }) => {
+  price = parseFloat(price.toString());
   return (
     <>
       <section className="card">
-        <img src={image_url} alt={title} className="card-img" />
+        <img src={image} alt={name} className="card-img" />
         <div className="card-details">
-          <h3 className="card-title">{title}</h3>
+          <h3 className="card-title">{name}</h3>
           <section className="card-reviews">
           <AiFillStar /> <AiFillStar /> <AiFillStar /> <AiFillStar />
           </section>
           <section className="card-price">
             <div className="price">
-              <del>200$</del> {price}$
+              <ins style={{"fontWeight": 600,"fontSize" : 16, "color": "#3E3E3F", "textDecoration": "none", }}>{formatNumber(price*discount/100)}đ     </ins>
+              <del style={{"color" : "#A8A9AD", "fontSize" : 12, "fontWeight": 400, }}><span>{formatNumber(price)}đ</span></del> 
             </div>
             <div className="bag">
               <BsFillBagFill className="bag-icon" />

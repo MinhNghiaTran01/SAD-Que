@@ -1,4 +1,4 @@
-const API_DOMAIN = 'http://localhost:8000';
+const API_DOMAIN = 'http://127.0.0.1:8000';
 
 export const get = async (path) => {
   try{

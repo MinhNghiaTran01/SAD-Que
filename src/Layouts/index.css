@@ -45,3 +45,6 @@ aside.ant-layout-sider-dark{
 .sidebar{
   width: 14%;
 }
+.ant-layout-content{
+  height: 100vh;
+}

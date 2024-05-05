@@ -13,10 +13,10 @@ const Recommended = ({ handleClick }) => {
         <h2 className="recommended-title">Recommended</h2>
         <div className="recommended-flex">
           <Radio.Group value={selectedProduct} onChange={handleSizeChange}>
-            <Radio.Button onClick={handleClick} value="All Products">All Products</Radio.Button>
-            <Radio.Button onClick={handleClick} value="book">Book</Radio.Button>
-            <Radio.Button onClick={handleClick} value="clothes">Clothes</Radio.Button>
-            <Radio.Button onClick={handleClick} value="mobile">Mobile</Radio.Button>
+            <Radio.Button onClick={(e) => {handleClick(e.target.value) }} value="All Products">All Products</Radio.Button>
+            <Radio.Button onClick={(e) => {handleClick(e.target.value) }} value="book">Book</Radio.Button>
+            <Radio.Button onClick={(e) => {handleClick(e.target.value) }} value="clothes">Clothes</Radio.Button>
+            <Radio.Button onClick={(e) => {handleClick(e.target.value) }} value="mobile">Mobile</Radio.Button>
           </Radio.Group>
         </div>
       </div>
