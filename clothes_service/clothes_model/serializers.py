@@ -5,3 +5,7 @@ class ClothesCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clothes
         fields = '__all__'
+class CategoryCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
