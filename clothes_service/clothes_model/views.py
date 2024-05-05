@@ -14,5 +14,5 @@ class ClothesCreate(APIView):
 class CategoryCreate(APIView):
     def get(self, request):
         categories = Category.objects.all()
-        categoriesSerializer=CategoryCreateSerializer(data=categories,many=True)
+        categoriesSerializer=CategoryCreateSerializer(categories,many=True)
         return Response(categoriesSerializer.data, status=200)
