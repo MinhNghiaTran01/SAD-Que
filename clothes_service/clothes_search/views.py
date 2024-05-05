@@ -15,6 +15,5 @@ class ClothesSearch(APIView):
             clothes = clothes.filter(name__icontains=name)
         if category:
             clothes = clothes.filter(category__name__icontains=category)
-
         serializer = ClothesSearchSerializer(clothes, many=True)
         return Response(serializer.data)
