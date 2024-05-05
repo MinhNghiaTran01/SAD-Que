@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class Order(models.Model):
     quantity = models.IntegerField(default=1)
     date_ordered = models.DateTimeField(auto_now_add=True)
+    product_type= models.CharField(max_length=225)
     product_id = models.IntegerField()  # Trường ID của sản phẩm
     user_id = models.IntegerField()  # Trường ID của người dùng đặt hàng
 
