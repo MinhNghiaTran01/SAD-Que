@@ -1,0 +1,32 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  z-index: 999;
+  margin-left: 2rem;
+}
+
+input {
+  padding: 12px 20px;
+  border: none;
+  background: #fff;
+  outline: none;
+  margin-right: 20px;
+  border-radius: 5px 1px #fff;
+  position: relative;
+  width: 14rem;
+}
+
+.nav-icons {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 2rem;
+}
+.search-input-book{
+  margin-left: 1200px;
+}
+
+.profile-container{
+  margin-right: 25px;
+}

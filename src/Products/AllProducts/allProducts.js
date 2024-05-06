@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import './clothes.css'
-export default function Clothes() {
-  const [result,{handleInputChange,query}] = useOutletContext();
-  console.log("clothes", result);
+import { getAllClothes } from "../../services/clothesService";
+import './allProducts.css'
+export default function AllProducts() {
+  const [result,{handleInputChange,query} ] = useOutletContext();
+  console.log("all", result);
   return (
     <>
       <div className="nav-container">
         <input
-          className="search-input-clothes"
+          className="search-input-all"
           onChange={handleInputChange}
           value={query}
           type="text"

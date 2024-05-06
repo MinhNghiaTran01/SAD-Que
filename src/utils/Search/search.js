@@ -25,20 +25,21 @@ export function searchAll(setProductsAll, queryAll) {
   return <div>searchAll</div>;
 }
 
-export function search(products, setProducts, queryAll) {
-  return <div>search</div>;
+export function search(setProducts, query,selectedProduct) {
+
+  let port = 8000
+  if(selectedProduct==="clothes"){
+    port = 8001
+  }
+  else if(selectedProduct==="mobile"){
+    port = 8002
+  }
+
+  const fetchSearch= async () => {
+    const filter = await getAllBook(
+      `${port}/${selectedProduct}search/${selectedProduct}/search?name=${query}`
+    );
+    setProducts(filter)
+  }
+  fetchSearch();
 }
-
-// const fetchSearch = async () => {
-//   console.log("this is in search");
-//   const res = await getAllClothes(
-
-//     `${selectedProduct.toLowerCase()}search/${selectedProduct.toLowerCase()}/search?name=${query}`
-//   );
-//   console.log("response query search: " + res);
-//   let clothesFilter = [];
-//   res.forEach((clothes) => {
-//     clothesFilter.push(clothes);
-//   });
-//   setProducts(clothesFilter);
-// };

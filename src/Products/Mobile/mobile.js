@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import './clothes.css'
-export default function Clothes() {
+import './mobile.css'
+export default function Mobile() {
   const [result,{handleInputChange,query}] = useOutletContext();
-  console.log("clothes", result);
+  console.log("mobile", result);
   return (
     <>
       <div className="nav-container">
         <input
-          className="search-input-clothes"
+          className="search-input-mobile"
           onChange={handleInputChange}
           value={query}
           type="text"
