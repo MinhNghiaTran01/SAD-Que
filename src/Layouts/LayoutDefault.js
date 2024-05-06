@@ -24,91 +24,92 @@ function Fallback({ error, resetErrorBoundary }) {
   );
 }
 
-   
-async function filteredData(products, selectedCategory, query,selectedProduct,setSelectedCategory) {
+// lọc search
+async function filteredData(products, selectedCategory, query,selectedProduct,setProducts) {
   console.log("on function filteredData");
   let filteredProducts = products;
-  console.log("product",products)
   const fetchSearch = async () => {
     console.log("this is in search");
     const res = await getAllClothes(
+     
       `${selectedProduct.toLowerCase()}search/${selectedProduct.toLowerCase()}/search?name=${query}`
     );
     console.log("response query search: " + res);
     let clothesFilter = [];
-    filteredProducts.forEach((item) => {
-      res.forEach((clothes) => {
-        if (clothes.id === item.id) {
-          clothesFilter.push(clothes);
-        }
-      });
+    res.forEach((clothes) => {
+      clothesFilter.push(clothes);
     });
-    filteredProducts = clothesFilter;
+    setProducts(clothesFilter);
   };
 
-  if (query !== "") {
-    fetchSearch();
-  }
-  const fetchClothesByCategoryId = async () => {
-    let res = [];
-    if (selectedCategory?.name === "All") {
-        try {
-            // Assuming getAllClothes returns a Promise
-            res = await getAllClothes(`${selectedProduct.toLowerCase()}infor/${selectedProduct.toLowerCase()}`);
-           console.log("response query clothes by all: " + res);
-
-            let clothesFilter = [];
-            filteredProducts.forEach((item) => {
-                res.forEach((clothes) => {
-                    if (clothes.id === item.id) {
-                        clothesFilter.push(clothes);
-                    }
-                });
-            });
-            filteredProducts = clothesFilter;
-        } catch (error) {
-            console.error("Failed to fetch clothes:", error);
-            // Handle errors or fallback logic here
-        }
-    } else if (selectedCategory !== null) {
-      res = await getAllClothes(
-        `${selectedProduct?.toLowerCase()}search/${selectedProduct.toLowerCase()}/search?categoryId=${selectedCategory.id}`
-      );
+  if (query != "") {
     
-      console.log("response query clothes by category: " + res);
+   await fetchSearch();
+  }else{
 
-      let clothesFilter = [];
-      console.log("this is in by category: ",filteredProducts)
-      filteredProducts.forEach((item) => {
-        res.forEach((clothes) => {
-          if (clothes.id === item.id) {
-            clothesFilter.push(clothes);
+    const fetchClothesByCategoryId = async () => {
+      let res = [];
+      if (selectedCategory?.name === "All") {
+          try {
+              // Assuming getAllClothes returns a Promise
+              res = await getAllClothes(`${selectedProduct.toLowerCase()}infor/${selectedProduct.toLowerCase()}`);
+             console.log("response query clothes by all: " + res);
+  
+              let clothesFilter = [];
+              filteredProducts.forEach((item) => {
+                  res.forEach((clothes) => {
+                      if (clothes.id === item.id) {
+                          clothesFilter.push(clothes);
+                      }
+                  });
+              });
+              filteredProducts = clothesFilter;
+          } catch (error) {
+              console.error("Failed to fetch clothes:", error);
+              // Handle errors or fallback logic here
           }
-        });
-      });
-      filteredProducts = clothesFilter;
-      // setSelectedCategory(selectedCategory);
-    }
-  };
-  filteredProducts = fetchClothesByCategoryId();
+      } else {
+        res = await getAllClothes(
+          `${selectedProduct?.toLowerCase()}search/${selectedProduct.toLowerCase()}/search?categoryId=${selectedCategory.id}`
+        );
+      
+        console.log("response query clothes by category: " + res);
+  
+        let clothesFilter = [];
+        console.log("this is in by category: ",filteredProducts)
+          res.forEach((clothes) => {
+              clothesFilter.push(clothes);
+          });
+    
+        setProducts(clothesFilter);
+      }
+    };
+    filteredProducts = await fetchClothesByCategoryId();
+  }
+ 
   // return filteredProducts;
 }
+var count=0;
 
+
+
+//Layout
 function LayoutDefault() {
   const navigate = useNavigate();
   // const { showBoundaryOfEffect } = useErrorBoundary();
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedType, setSelectedType] = useState("All");
+  // const [selectedType, setSelectedType] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState("clothes");
-  const [currentLayout, setCurrentLayout] = useState('default');
   const [products, setProducts] = useState([]);
   // ----------- Input Filter -----------
   const [query, setQuery] = useState("");
 
   const handleInputChange = async (event) => {
     setQuery(event.target.value);
+    filteredData(products, selectedCategory,event.target.value,selectedProduct,setProducts);
   };
 
+  //Gọi All cho lần đầu tiên
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -127,12 +128,13 @@ function LayoutDefault() {
       }
     };
     fetchData();
-  }, [selectedProduct]);
+  }, []);
 
 
   // ----------- Radio Filtering -----------
   const handleChange = (value) => {
-    filteredData(products, value,query,selectedProduct,setSelectedCategory);
+    setSelectedCategory(value);
+    filteredData(products, value,query,selectedProduct,setProducts);
   };
   // ------------ Button Filtering Type -----------
   const handleClick = (value) => {
