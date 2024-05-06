@@ -13,7 +13,9 @@
 }
 
 .card-img {
-  width: 10rem;
+  width: 210px;
+  height: 240px;
+  overflow: hidden;
   margin-bottom: 1rem;
 }
 

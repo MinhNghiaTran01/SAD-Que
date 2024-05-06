@@ -8,7 +8,7 @@ function Category({ handleChange, type = "clothes" }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllCategory(`${type}create/categories`);
+        const data = await getAllCategory(`8001/${type}create/categories`);
         console.log(data);
         setCategories(data);
       } catch (error) {

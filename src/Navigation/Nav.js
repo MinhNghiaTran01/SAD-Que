@@ -7,16 +7,16 @@ import {Link} from "react-router-dom"
 // 
 import "./Nav.css";
 
-const Nav = ({ handleInputChange, query }) => {
+const Nav = ({ handleInputChangeAll, queryAll }) => {
   return (
     <nav>
       <div className="nav-container">
         <input
           className="search-input"
           type="text"
-          onChange={handleInputChange}
-          value={query}
-          placeholder="Enter your search shoes."
+          onChange={handleInputChangeAll}
+          value={queryAll}
+          placeholder="Enter your search all products"
         />
       </div>
       <div className="profile-container">

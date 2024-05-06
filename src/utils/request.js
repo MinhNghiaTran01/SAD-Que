@@ -1,9 +1,9 @@
-const API_DOMAIN = 'http://127.0.0.1:8000';
+const API_DOMAIN = 'http://127.0.0.1';
 
 export const get = async (path) => {
   try{
-    console.log(`${API_DOMAIN}/${path}`)
-    const res = await fetch(`${API_DOMAIN}/${path}`);
+    console.log(`${API_DOMAIN}:${path}`)
+    const res = await fetch(`${API_DOMAIN}:${path}`);
     return res;
   }
   catch(err){
@@ -14,30 +14,30 @@ export const get = async (path) => {
 }
 
 export const post = async (data,path) => {
-  const res = await fetch(`${API_DOMAIN}/${path}`, {
+  const res = await fetch(`${API_DOMAIN}:${path}`, {
     method: 'POST',
     headers: { 
-      'Accept': 'application/json',
-      'Content-Type': 'application/json' } ,
+      'Accept': 'application:json',
+      'Content-Type': 'application:json' } ,
     body: JSON.stringify(data)
   });
   return res;
 }
 
 export const del = async (id,path) => {
-  const res = await fetch(`${API_DOMAIN}/${path}/${id}`, {
+  const res = await fetch(`${API_DOMAIN}:${path}:${id}`, {
     method: 'DELETE',
-    Accept: 'application/json',
+    Accept: 'application:json',
   });
   return res;
 }
 
 export const update = async (path,value) => {
-  const res = await fetch(`${API_DOMAIN}/${path}`, {
+  const res = await fetch(`${API_DOMAIN}:${path}`, {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      'Content-Type': 'application:json',
+      Accept: 'application:json',
     },
     body: JSON.stringify(value),
   });
