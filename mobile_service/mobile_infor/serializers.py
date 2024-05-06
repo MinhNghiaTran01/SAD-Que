@@ -12,8 +12,6 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MobileSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
-
     class Meta:
         model = Mobile
-        fields = '__all__'
+        fields = '__all__'  

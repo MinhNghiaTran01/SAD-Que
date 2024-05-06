@@ -3,7 +3,7 @@ import os
 
 def run_project(project_name, port, initial_cwd):
     project_path = os.path.join(initial_cwd, project_name)
-    cmd = f"python manage.py runserver 0.0.0.0:{port}"
+    cmd = f"python manage.py runserver {port}"
     print(f"Đang khởi động dự án {project_name} trên cổng {port}...")
     subprocess.Popen(cmd, shell=True, cwd=project_path)  # Sử dụng cwd để chạy command từ project_path
 
