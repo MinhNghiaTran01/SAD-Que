@@ -2,6 +2,7 @@ const API_DOMAIN = 'http://127.0.0.1:8000';
 
 export const get = async (path) => {
   try{
+    console.log(`${API_DOMAIN}/${path}`)
     const res = await fetch(`${API_DOMAIN}/${path}`);
     return res;
   }

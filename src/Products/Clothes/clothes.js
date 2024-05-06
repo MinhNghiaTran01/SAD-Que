@@ -3,14 +3,15 @@ import { useOutletContext } from "react-router-dom";
 import { getAllClothes } from "../../services/clothesService";
 
 export default function Clothes() {
-  const [result] = useOutletContext();
+  const [products] = useOutletContext();
+  console.log("clothes", products)
   return (
-    <>
-      <section className="card-container">
-          {result.map( (item) => {
-            return item
-          })}
-      </section>
-    </>
-  );
+  <>
+    <section className="card-container">
+        {products?.map( (item) => {
+          return item
+        })}
+    </section>
+  </>
+)
 }

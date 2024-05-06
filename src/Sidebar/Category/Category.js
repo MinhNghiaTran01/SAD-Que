@@ -8,7 +8,7 @@ function Category({ handleChange, type = "clothes" }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllCategory(`clothescreate/categories`);
+        const data = await getAllCategory(`${type}create/categories`);
         console.log(data);
         setCategories(data);
       } catch (error) {
@@ -26,9 +26,12 @@ function Category({ handleChange, type = "clothes" }) {
           <input onChange={() => handleChange("All")} type="radio" value="" name="test" />
           <span className="checkmark"></span>All
         </label>
-        {categories.map((item, i) => (
+        {categories?.map((item, i) => (
           <label className="sidebar-label-container" key={i}>
-            <input onChange={() => handleChange(item.id)} type="radio" value={item.name} name="test" />
+            <input onChange={() => handleChange({
+              "name" : item.name,
+              "id": item.id,
+            })} type="radio" value={item.name} name="test" />
             <span className="checkmark"></span>{item.name}
           </label>
         ))}

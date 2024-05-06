@@ -5,7 +5,7 @@ import Book from "../Products/Book/book";
 import Clothes from "../Products/Clothes/clothes";
 export const routes = [
   {
-    path: "/home",
+    path: "/",
     element: <LayoutDefault />,
     children: [
       {

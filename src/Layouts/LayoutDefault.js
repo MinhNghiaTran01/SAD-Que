@@ -24,12 +24,83 @@ function Fallback({ error, resetErrorBoundary }) {
   );
 }
 
+   
+async function filteredData(products, selectedCategory, query,selectedProduct,setSelectedCategory) {
+  console.log("on function filteredData");
+  let filteredProducts = products;
+  console.log("product",products)
+  const fetchSearch = async () => {
+    console.log("this is in search");
+    const res = await getAllClothes(
+      `${selectedProduct.toLowerCase()}search/${selectedProduct.toLowerCase()}/search?name=${query}`
+    );
+    console.log("response query search: " + res);
+    let clothesFilter = [];
+    filteredProducts.forEach((item) => {
+      res.forEach((clothes) => {
+        if (clothes.id === item.id) {
+          clothesFilter.push(clothes);
+        }
+      });
+    });
+    filteredProducts = clothesFilter;
+  };
+
+  if (query !== "") {
+    fetchSearch();
+  }
+  const fetchClothesByCategoryId = async () => {
+    let res = [];
+    if (selectedCategory?.name === "All") {
+        try {
+            // Assuming getAllClothes returns a Promise
+            res = await getAllClothes(`${selectedProduct.toLowerCase()}infor/${selectedProduct.toLowerCase()}`);
+           console.log("response query clothes by all: " + res);
+
+            let clothesFilter = [];
+            filteredProducts.forEach((item) => {
+                res.forEach((clothes) => {
+                    if (clothes.id === item.id) {
+                        clothesFilter.push(clothes);
+                    }
+                });
+            });
+            filteredProducts = clothesFilter;
+        } catch (error) {
+            console.error("Failed to fetch clothes:", error);
+            // Handle errors or fallback logic here
+        }
+    } else if (selectedCategory !== null) {
+      res = await getAllClothes(
+        `${selectedProduct?.toLowerCase()}search/${selectedProduct.toLowerCase()}/search?categoryId=${selectedCategory.id}`
+      );
+    
+      console.log("response query clothes by category: " + res);
+
+      let clothesFilter = [];
+      console.log("this is in by category: ",filteredProducts)
+      filteredProducts.forEach((item) => {
+        res.forEach((clothes) => {
+          if (clothes.id === item.id) {
+            clothesFilter.push(clothes);
+          }
+        });
+      });
+      filteredProducts = clothesFilter;
+      // setSelectedCategory(selectedCategory);
+    }
+  };
+  filteredProducts = fetchClothesByCategoryId();
+  // return filteredProducts;
+}
+
 function LayoutDefault() {
   const navigate = useNavigate();
   // const { showBoundaryOfEffect } = useErrorBoundary();
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedType, setSelectedType] = useState(null);
-  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedType, setSelectedType] = useState("All");
+  const [selectedProduct, setSelectedProduct] = useState("clothes");
+  const [currentLayout, setCurrentLayout] = useState('default');
   const [products, setProducts] = useState([]);
   // ----------- Input Filter -----------
   const [query, setQuery] = useState("");
@@ -41,10 +112,14 @@ function LayoutDefault() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const newDataProducts = await getAllClothes(`${selectedProduct.toLowerCase()}infor/${selectedProduct.toLowerCase()}`);
-        console.log(newDataProducts);
+        const newDataProducts = await getAllClothes(
+          `${selectedProduct.toLowerCase()}infor/${selectedProduct.toLowerCase()}`
+        );
         if (newDataProducts?.length > 0) {
           setProducts(newDataProducts);
+        }
+        else{
+          setProducts([])
         }
       } catch (error) {
         // showBoundaryOfEffect(error)
@@ -54,89 +129,37 @@ function LayoutDefault() {
     fetchData();
   }, [selectedProduct]);
 
-  const filteredItems = products?.filter(
-    (product) =>
-      product?.name?.toLowerCase().indexOf(query.toLowerCase()) !== -1
-  );
 
   // ----------- Radio Filtering -----------
-  const handleChange = (idCategory) => {
-    setSelectedCategory(idCategory);
+  const handleChange = (value) => {
+    filteredData(products, value,query,selectedProduct,setSelectedCategory);
   };
   // ------------ Button Filtering Type -----------
   const handleClick = (value) => {
     setSelectedProduct(value);
-    navigate(`/home/${value}`);
+    navigate(`/${value}`);
   };
+
   
-  function filteredData(products, selectedCategory, query) {
-    let filteredProducts = products;
-    const fetchSearch = async () => {
-      const res = await getAllClothes(
-        `${selectedProduct.toLowerCase()}search/${selectedProduct.toLowerCase()}/search?name=${query}`
-      );
-      let clothesFilter = [];
-      filteredProducts.forEach((item) => {
-        res.forEach((clothes) => {
-          if (clothes.id === item.id) {
-            clothesFilter.push(clothes);
-          }
-        });
-      });
-      filteredProducts = clothesFilter;
-    };
-
-    if (query !== "") {
-      fetchSearch();
-    }
-
-    const fetchClothesByCategoryId = async () => {
-      let res = []
-      if (selectedCategory === "All") {
-        res = await getAllClothes(`${selectedProduct.toLowerCase()}infor/${selectedProduct.toLowerCase()}`);
-        let clothesFilter = [];
-        filteredProducts.forEach((item) => {
-          res.forEach((clothes) => {
-            if (clothes.id === item.id) {
-              clothesFilter.push(clothes);
-            }
-          });
-        });
-        filteredProducts = clothesFilter;
-        
-      }
-      else{
-        res = await getAllClothes(`${selectedProduct.toLowerCase()}infor/${selectedProduct.toLowerCase()}?categoryId=${selectedCategory}`);
-        let clothesFilter = [];
-        filteredProducts.forEach((item) => {
-          res.forEach((clothes) => {
-            if (clothes.id === item.id) {
-              clothesFilter.push(clothes);
-            }
-          });
-        });
-        filteredProducts = clothesFilter;
-      }
-      
-    };
-    fetchClothesByCategoryId();
-
-    return filteredProducts.map(({ image, name, price, discount }) => (
-      <Card
-        key={Math.random()}
-        image={image}
-        name={name}
-        price={price}
-        discount={discount}
-      />
-    ));
-  }
-  const result = filteredData(products, selectedCategory, query);
+ 
+  
+  // const filteredProducts =  filteredData(products, selectedCategory, query);
+ 
+  const result = products?.map(({ image, name, price, discount }) => (
+    <Card
+      key={Math.random()}
+      image={image}
+      name={name}
+      price={price}
+      discount={discount}
+    />
+  ));
+  if(result?.length > 0)
   return (
     <Layout className="layout-default">
       <Sider width="14%" style={{ background: "white" }}>
         <ErrorBoundary>
-          <Sidebar handleChange={handleChange} type={selectedType} />
+          <Sidebar handleChange={handleChange} type={selectedProduct} />
         </ErrorBoundary>
       </Sider>
       <Layout>
@@ -157,5 +180,32 @@ function LayoutDefault() {
       </Layout>
     </Layout>
   );
+  else{
+    return (
+      <Layout className="layout-default">
+        <Sider width="14%" style={{ background: "white" }}>
+          <ErrorBoundary>
+            <Sidebar handleChange={handleChange} type={selectedProduct} />
+          </ErrorBoundary>
+        </Sider>
+        <Layout>
+          <Header style={{ background: "white", height: "90px", padding: "0" }}>
+            <ErrorBoundary>
+              <Navigation query={query} handleInputChange={handleInputChange} />
+            </ErrorBoundary>
+          </Header>
+  
+          <Content>
+            <ErrorBoundary>
+              <Recommended handleClick={handleClick} />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <Outlet context={[[]]} />
+            </ErrorBoundary>
+          </Content>
+        </Layout>
+      </Layout>
+    );
+  }
 }
 export default LayoutDefault;

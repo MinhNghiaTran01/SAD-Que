@@ -10,8 +10,8 @@ const Sidebar = ({ handleChange,type }) => {
           <h1>🛒</h1>
         </div>
         <Category handleChange={handleChange} type={type}/>
-        <Price handleChange={handleChange} />
-        <Colors handleChange={handleChange} />
+        <Price handleChange={handleChange} type={type}/>
+        <Colors handleChange={handleChange} type={type}/>
       </section>
     </>
   );
