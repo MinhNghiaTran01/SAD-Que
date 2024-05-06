@@ -78,13 +78,12 @@ async function filteredData(products, selectedCategory, query,selectedProduct,se
       console.log("response query clothes by category: " + res);
 
       let clothesFilter = [];
-      console.log("this is in by category: ",filteredProducts)
       filteredProducts.forEach((item) => {
         res.forEach((clothes) => {
           if (clothes.id === item.id) {
             clothesFilter.push(clothes);
           }
-        });
+        }); 
       });
       filteredProducts = clothesFilter;
       // setSelectedCategory(selectedCategory);
@@ -132,6 +131,7 @@ function LayoutDefault() {
 
   // ----------- Radio Filtering -----------
   const handleChange = (value) => {
+    console.log("okokooko")
     filteredData(products, value,query,selectedProduct,setSelectedCategory);
   };
   // ------------ Button Filtering Type -----------
