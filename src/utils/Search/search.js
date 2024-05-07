@@ -27,6 +27,7 @@ export function searchAll(setProductsAll, queryAll) {
 
 export function search(setProducts, query,selectedProduct) {
 
+  console.log(selectedProduct)
   let port = 8000
   if(selectedProduct==="clothes"){
     port = 8001

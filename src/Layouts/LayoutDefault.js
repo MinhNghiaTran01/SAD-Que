@@ -40,7 +40,6 @@ function LayoutDefault() {
 
   //search All Products
   const handleInputChangeAll = async (event) => {
-    console.log(event.target.value);
     const queryAll = event.target.value;
     searchAll(setProductsAll, queryAll);
     setQueryAll(queryAll);
@@ -48,9 +47,9 @@ function LayoutDefault() {
 
   //search  Products
   const handleInputChange = (event) => {
-    console.log(event.target.value);
     const query = event.target.value;
-    search(products, setProducts, query, selectedProduct);
+    console.log(selectedProduct)
+    search(setProducts, query, selectedProduct);
     setQuery(query);
   };
   //Get All Products
@@ -70,7 +69,7 @@ function LayoutDefault() {
     fetchData();
   }, []);
 
-  // Gọi All  cho lần đầu tiên
+  // Get All Product 
   useEffect(() => {
     const fetchData = async () => {
       let port = 8000;
