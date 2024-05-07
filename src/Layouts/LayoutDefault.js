@@ -61,7 +61,7 @@ function LayoutDefault() {
         const clothes = await getAllClothes(`8001/clothesinfor/clothes`);
         const mobile = await getAllClothes(`8002/mobileinfor/mobile`);
         const productAll = [...clothes, ...mobile, ...book];
-        
+        console.log("productsAllFirst",productAll);
         setProductsAll(productAll);
       } catch (error) {
         console.log(error);
